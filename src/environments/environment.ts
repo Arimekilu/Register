@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  fbDataBaseUrl: 'https://cashregister-e1396-default-rtdb.europe-west1.firebasedatabase.app',
+  apyKey: "AIzaSyC3UF44ejRKLu9UppOS2U-bGgPY5a34FGg",
+  fbDbUrl: 'https://testgav-d2304-default-rtdb.europe-west1.firebasedatabase.app'
 };
 
 /*

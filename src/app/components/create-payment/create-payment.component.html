@@ -1,0 +1,48 @@
+<div class="container">
+  <form [formGroup]="CreatePaymentForm" class="example-form">
+
+    <br>
+
+    <mat-form-field appearance="fill" class="example-full-width">
+      <mat-label>Введите сумму:</mat-label>
+      <input matInput
+             value=""
+             type="number"
+             required
+             name="name"
+             formControlName="value"
+      />
+    </mat-form-field>
+
+    <br>
+    <div>
+      <mat-radio-group aria-label="Выберите тип платежа:" formControlName="type">
+        <mat-radio-button value="+">Приход</mat-radio-button>
+        <mat-radio-button value="-">Расход</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <br>
+
+    <mat-form-field appearance="fill" class="example-full-width">
+      <mat-label>Введите комментарий:</mat-label>
+      <textarea matInput formControlName="comment"></textarea>
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Выберите дату платежа:</mat-label>
+      <input matInput [matDatepicker]="picker1" [formControl]="date" formControlName="date">
+      <mat-hint>DD/MM/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+
+    <br>
+
+    <button mat-raised-button color="primary" (click)="submit()" [disabled]="CreatePaymentForm.invalid">Добавить
+      платеж
+    </button>
+  </form>
+</div>

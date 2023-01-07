@@ -1,0 +1,32 @@
+<div class="container">
+<form [formGroup]="dateForOutputForm">
+<input type="date" formControlName="date">
+  <br>
+  <button (click)="submit()">Выбор даты вывода платежей</button>
+</form>
+  <br>
+<table>
+  <thead>
+  <tr>
+    <th>#</th>
+    <th>Время</th>
+    <th>Значение</th>
+    <th>Комментарий</th>
+    <th>Действие</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let pay of arrFbPayments$ | async; let idx = index">
+    <td>{{idx + 1}}</td>
+    <td>{{pay.date | date: 'dd/MM HH:mm'}}</td>
+    <td *ngIf="pay.value" [ngClass]="{'text-success': pay.value > 0, 'text-danger': pay.value < 0}" >{{pay.value}}</td>
+    <td>{{pay.comment}}</td>
+    <td>
+      <button (click)="remove(pay.id ? pay.id : '1', pay.date)">Удалить</button>
+    </td>
+  </tr>
+  </tbody>
+  <h3>Всего: {{sum | async}}</h3>
+
+</table>
+</div>
