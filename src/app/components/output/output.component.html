@@ -2,9 +2,11 @@
 <form [formGroup]="dateForOutputForm">
 <input type="date" formControlName="date">
   <br>
-  <button (click)="submit()">Выбор даты вывода платежей</button>
+  <button mat-raised-button color="primary" (click)="submit()">Выбор даты вывода платежей</button>
 </form>
   <br>
+  <h3>{{message}}</h3>
+
 <table>
   <thead>
   <tr>
@@ -26,7 +28,7 @@
     </td>
   </tr>
   </tbody>
-  <h3>Всего: {{sum | async}}</h3>
+  <h3 *ngIf="sum">Всего: {{sum | async}}</h3>
 
 </table>
 </div>

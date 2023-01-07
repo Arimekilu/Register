@@ -33,16 +33,17 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Выберите дату платежа:</mat-label>
-      <input matInput [matDatepicker]="picker1" [formControl]="date" formControlName="date">
+      <input matInput [matDatepicker]="picker1" [formControl]="matPicerDate" formControlName="date">
       <mat-hint>DD/MM/YYYY</mat-hint>
       <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
       <mat-datepicker #picker1></mat-datepicker>
     </mat-form-field>
-
+    <br>
     <br>
 
     <button mat-raised-button color="primary" (click)="submit()" [disabled]="CreatePaymentForm.invalid">Добавить
       платеж
     </button>
+    <button (click)="test()">test</button>
   </form>
 </div>

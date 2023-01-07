@@ -10,8 +10,8 @@ import {Payment} from "../../interfaces/interfaces";
 })
 export class CreatePaymentComponent {
 
-  date = new FormControl(new Date());
-  serializedDate = new FormControl(new Date().toISOString());
+  matPicerDate = new FormControl(new Date());
+  // serializedDate = new FormControl(new Date().toISOString());
 
   CreatePaymentForm: FormGroup
 
@@ -30,18 +30,25 @@ export class CreatePaymentComponent {
     if (this.CreatePaymentForm.invalid) {
       return
     }
-    const date = (this.CreatePaymentForm.value.date ? new Date(this.CreatePaymentForm.value.date) : new Date())
+    const date = this.matPicerDate.value ? this.matPicerDate.value : new Date()
     const newPayment: Payment = {
       value: this.CreatePaymentForm.value.type === '+' ? this.CreatePaymentForm.value.value : -this.CreatePaymentForm.value.value,
-      date: this.CreatePaymentForm.value.date ? this.CreatePaymentForm.value.date : new Date(),
+      // date: this.CreatePaymentForm.value.date ? this.CreatePaymentForm.value.date : new Date(),
+      date: this.matPicerDate.value ? this.matPicerDate.value : new Date(),
       comment: this.CreatePaymentForm.value.comment
     }
     this.dataService.setPayment(newPayment, date).subscribe(() => {
       this.CreatePaymentForm.get('value')?.reset()
       this.CreatePaymentForm.get('type')?.reset()
     })
+    this.dataService.getPaymentDay(new Date())
   }
 
   ngOnInit(): void {
+  }
+
+  test() {
+    console.log('this.CreatePaymentForm.value:', this.CreatePaymentForm.value)
+    console.log('matPicerDate.value', this.matPicerDate.value)
   }
 }

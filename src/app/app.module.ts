@@ -14,6 +14,7 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from "@angular/material/form-field";
 import {OutputComponent} from "./components/output/output.component";
 import {LoginPageComponent} from "./components/login-page/login-page.component";
 import {MAT_RADIO_DEFAULT_OPTIONS} from "@angular/material/radio";
+import { CreateOtputComponent } from './components/create-otput/create-otput.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -22,7 +23,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
 }
 
 @NgModule({
-  declarations: [AppComponent, CreatePaymentComponent, OutputComponent, LoginPageComponent],
+  declarations: [AppComponent, CreatePaymentComponent, OutputComponent, LoginPageComponent, CreateOtputComponent],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,

@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Payment} from "../../interfaces/interfaces";
-import {HttpClient} from "@angular/common/http";
 import {DataService} from "../../services/data.service";
 import {FormControl, FormGroup} from "@angular/forms";
-import {BehaviorSubject, from, Observable, ObservedValueOf, of} from "rxjs";
-import {environment} from "../../../environments/environment";
+import {Observable, of} from "rxjs";
+
 
 @Component({
   selector: 'app-output',
@@ -13,29 +12,32 @@ import {environment} from "../../../environments/environment";
 })
 export class OutputComponent implements OnInit {
   // @ts-ignore
-  arrFbPayments: Payment[]
+  arrFbPayments: Payment[] = []
   arrFbPayments$: Observable<Payment[]> | undefined
   dateForOutputForm: FormGroup
   sum: Observable<number> | undefined
+  message: undefined | string
 
   constructor(
-    private http: HttpClient,
     public dateService: DataService
   ) {
     this.dateForOutputForm = new FormGroup({
-        date: new FormControl(new Date())
-      })
-  }
-
-  ngOnInit(): void {
-    this.dateService.getPaymentDay(new Date()).subscribe(res => {
-      this.arrFbPayments = res
-      this.arrFbPayments$ = of(res)
-      this.sum = of(this.dateService.getPayDaySum(res))
+      date: new FormControl(new Date())
     })
   }
 
-  remove (id: string, date: Date) {
+  ngOnInit(): void {
+    this.dateService.getPaymentDay(new Date()).subscribe((res) => {
+      this.arrFbPayments = res
+      this.arrFbPayments$ = of(res)
+      this.sum = of(this.dateService.getPayDaySum(res))
+    }, error => {
+      console.log(error)
+      this.message = 'Платежей в этот день нет'
+    })
+  }
+
+  remove(id: string, date: Date) {
     if (id) {
       this.dateService.remove(id, date).subscribe(() => {
         this.arrFbPayments = this.arrFbPayments.filter(pay => pay.id !== id)
@@ -43,28 +45,33 @@ export class OutputComponent implements OnInit {
       this.dateService.getPaymentDay(date).subscribe(res => {
         this.arrFbPayments$ = of(res)
         this.sum = of(this.dateService.getPayDaySum(res))
-        console.log(res)
       })
     }
+    this.submit()
   }
 
   test() {
     this.arrFbPayments$?.subscribe(res => {
-      console.log(res)})
+      console.log(res)
+    })
     console.log(this.sum)
 
   }
 
   submit() {
-    let date =  new Date(this.dateForOutputForm.value.date)
-    console.log(date)
-    let rusDate = this.dateService.getRusDate(date)
-    console.log(rusDate)
-    this.dateService.getPaymentDay(date).subscribe(res => {
-      this.arrFbPayments$ = of(res)
-      this.sum = of(this.dateService.getPayDaySum(res))
-      console.log(res)
-    })
-
+    this.message = undefined
+    this.sum = undefined
+    this.arrFbPayments = []
+    this.arrFbPayments$ = of(this.arrFbPayments)
+    let date = new Date(this.dateForOutputForm.value.date)
+    this.dateService.getPaymentDay(date).subscribe(
+      (res) => {
+        this.arrFbPayments$ = of(res)
+        this.sum = of(this.dateService.getPayDaySum(res))
+      },
+      error => {
+        console.log(error)
+        this.message = 'Платежей в этот день нет'
+      })
   }
 }
