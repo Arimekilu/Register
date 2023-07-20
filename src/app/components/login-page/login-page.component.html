@@ -1,42 +1,23 @@
-<!--<div class="example-container">-->
-<!--  <form class="container" [formGroup]="loginForm">-->
-<!--    <div class="alert alert-danger" *ngIf="auth.error$ | async as error">-->
-<!--      {{error}}-->
 
-<!--    </div>-->
-
-<!--    <div class="alert alert-info" *ngIf="message">-->
-<!--      {{message}}-->
-
-<!--    </div>-->
-
-<!--    <mat-form-field appearance="fill">-->
-<!--      <mat-label>Enter your email</mat-label>-->
-<!--      <input matInput placeholder="pat@example.com"  required formControlName="email">-->
-
-<!--    </mat-form-field>-->
-
-
-<!--    <mat-form-field appearance="fill">-->
-<!--      <mat-label>Enter your password</mat-label>-->
-<!--      <input matInput [type]="hide ? 'password' : 'text'" required formControlName="password">-->
-<!--      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">-->
-<!--        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>-->
-<!--      </button>-->
-<!--    </mat-form-field>-->
-
-<!--    <button mat-raised-button color="primary" [disabled]="loginForm.invalid || submitted" (click)="submit()">Войти</button>-->
-
-
-
-<!--  </form>-->
-<!--</div>-->
 <form class="loginForm" [formGroup]="loginForm">
   <br>
   <label for="login">Логин:</label>
-  <input placeholder="email@example.com"  required formControlName="email" id="login">
+
+  <mat-form-field appearance="fill">
+    <mat-label>Enter your email</mat-label>
+    <input matInput placeholder="pat@example.com" required formControlName="email" id="login">
+    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+  </mat-form-field>
   <br>
   <label for="password">Пароль:</label>
-  <input   required formControlName="password" placeholder="Password" id="password">
-  <button [disabled]="loginForm.invalid || submitted" (click)="submit()">Войти</button>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Enter your password</mat-label>
+    <input matInput [type]="hide ? 'password' : 'text'" id="password" formControlName="password" required>
+    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" >
+      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+  </mat-form-field>
+  <br>
+  <button [disabled]="loginForm.invalid || submitted" (click)="submit()" mat-raised-button color="primary">Войти</button>
 </form>
